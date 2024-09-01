@@ -7,5 +7,5 @@
 
 3.sol_TenBarTruss.m為有限元素法分析程式
 
-4.Homework.pdf & Homework.tex為作業書面報告
+4.Homework.pdf & main.tex為作業書面報告
 
