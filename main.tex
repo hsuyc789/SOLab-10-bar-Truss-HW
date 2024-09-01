@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage{CJKutf8}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{subfigure}
+
+
+\title{Ten-Bar-Truss}
+\author{徐暘程}
+\date{August 2024}
+
+\begin{document}
+\begin{CJK}{UTF8}{bsmi}
+
+\maketitle
+
+\section{題目說明}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{pic.jpg}
+    \caption{題目}
+    \label{fig:enter-label}
+\end{figure}
+
+在以下條件下，給定桿件截面半徑並求各桿件之位移、應力與反作用力\\
+(1)所有桿件截面皆為圓型且整體架構處在靜力平衡之情況\\
+(2)材料為鋼，楊氏係數200GPa、密度7860kg/$m^{3}$、降伏強度250MPa\\
+(3)平行與鉛直之桿件(桿1至桿6)長度皆為9.14m\\
+(4)桿件半徑最佳化範圍為0.001m至0.5m間\\
+(5)節點2和節點4上之負載為1.0x$10^7$N\\
+
+
+\section{求解過程}
+
+
+    \subsection{有限元素建立}
+    
+        \subsubsection{基本參數定義}
+        定義各節點座標($nod_coor$)、桿長(L)、截面積(A)、楊氏係數(E)、矩陣自由度編號($ele_dof$)、節點配對($ele_con$)以及剛性矩陣(K)的維度。
+        \begin{figure}H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{setting.jpg}
+            \caption{基本參數定義}
+            \label{fig:enter-label}
+        \end{figure}
+        
+        \subsubsection{剛性矩陣建立}
+        使用三層for迴圈依序對12x12的剛性矩陣(K)建立144個元素。
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{stiff.jpg}
+            \caption{剛性矩陣建立}
+            \label{fig:enter-label}
+        \end{figure}
+        
+        \subsubsection{其他矩陣建立}
+        建立並設定作用力矩陣(F)的初始條件，並透過公式運算依序求解出位移矩陣(Q)、應力矩陣(stress)、反力矩陣(R)。
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{stress.jpg}
+            \caption{其他矩陣建立}
+            \label{fig:enter-label}
+        \end{figure}
+        
+        
+    \subsection{最佳化程式}
+    
+        \subsubsection{主程式main.m建立}
+        設定初始起點(r0)、目標值上下限(ub、lb)，並設定輸出顯示結果。
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{main.jpg}
+            \caption{主程式}
+            \label{fig:enter-label}
+        \end{figure}
+        
+        \subsubsection{副程式nonlcon.m建立}
+        設定邊界條件。
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{non.jpg}
+            \caption{Enter Caption}
+            \label{fig:enter-label}
+        \end{figure}
+        \subsubsection{副程式object.m建立}
+        設定目標函數的數學式。
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{obj.jpg}
+            \caption{Enter Caption}
+            \label{fig:enter-label}
+        \end{figure}
+
+        
+    \subsection{最佳化求解}
+    
+        \subsubsection{剛性矩陣(K)}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{K.jpg}
+            \caption{剛性矩陣(K)}
+            \label{fig:enter-label}
+        \end{figure}
+        
+        \subsubsection{反力矩陣(R)}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{R.jpg}
+            \caption{反力矩陣(R)}
+            \label{fig:enter-label}
+        \end{figure}
+        
+        \subsubsection{應力矩陣(stress)}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{stress.jpg}
+            \caption{應力矩陣(stress)}
+            \label{fig:enter-label}
+        \end{figure}
+        
+        \subsubsection{最佳化結果}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{ans.jpg}
+            \caption{最佳化結果}
+            \label{fig:enter-label}
+        \end{figure}
+
+
+\end{CJK}
+\end{document}
